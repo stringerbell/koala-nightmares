@@ -4,7 +4,7 @@ import { box, ground, skyAndLights, GuidePath } from '../world.js';
 import { PickupSystem } from '../pickup.js';
 import { GridPath, boxBlocker } from '../pathfind.js';
 
-const HELP = `WASD — move\nMouse — look\nSpace — jump\nShift — sprint\nC / Ctrl — crouch\nE — pick up item\n1–9 — select item`;
+const HELP = `WASD — move\nMouse — look\nSpace — jump\nShift — sprint\nCtrl or C — crouch (duck)\nE — pick up item\n1–9 — select item`;
 
 /** The player's house. Collect all nine items to leave for the jungle. */
 export class HouseScene extends BaseScene {

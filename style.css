@@ -10,6 +10,8 @@ html, body { height: 100%; background: #000; color: #eee; font-family: Georgia, 
 #prompt { position: absolute; top: 58%; left: 50%; transform: translateX(-50%); font-size: 20px; background: rgba(0,0,0,.55); padding: 6px 14px; border-radius: 4px; }
 #prompt:empty { display: none; }
 #subtitle { position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); font-size: 26px; font-style: italic; color: #f2d7d5; text-shadow: 0 0 12px #600; text-align: center; width: 80vw; }
+#stance { position: absolute; bottom: 100px; right: 16px; font-size: 16px; letter-spacing: 2px; color: #ffd166; background: rgba(0,0,0,.5); padding: 4px 10px; border-radius: 4px; }
+#stance:empty { display: none; }
 #controls-help { position: absolute; top: 16px; right: 16px; font-size: 15px; line-height: 1.5; background: rgba(0,0,0,.45); padding: 10px 14px; border-radius: 6px; white-space: pre; }
 #controls-help:empty { display: none; }
 

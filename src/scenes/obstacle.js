@@ -17,14 +17,15 @@ export class ObstacleScene extends BaseScene {
     this.addCollidable(box(0.5, 6, LENGTH + 20, 0x2a2f5a, HALF_W + 0.25, 3, LENGTH / 2));
     this.addCollidable(box(HALF_W * 2 + 1, 6, 0.5, 0x2a2f5a, 0, 3, -5));
     this.movers = [];
+    this.bars = [];
     let seed = 11; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
     for (let z = 14; z < LENGTH - 6; z += 9) {
       const kind = Math.floor(rnd() * 4);
       if (kind === 0) {            // hurdle: jump over
         this.addCollidable(box(HALF_W * 2, 1.1, 0.6, 0xe67e22, 0, 0.55, z));
       } else if (kind === 1) {     // low bar: crouch under
-        this.addCollidable(box(HALF_W * 2, 0.5, 0.8, 0x27ae60, 0, 1.45, z));
-        const post = (x) => this.addCollidable(box(0.3, 1.2, 0.3, 0x27ae60, x, 0.6, z));
+        this.bars.push(this.addCollidable(box(HALF_W * 2, 0.5, 0.8, 0x27ae60, 0, 1.6, z)));
+        const post = (x) => this.addCollidable(box(0.3, 1.35, 0.3, 0x27ae60, x, 0.675, z));
         post(-HALF_W + 0.2); post(HALF_W - 0.2);
       } else if (kind === 2) {     // sweeping block: dodge
         const m = box(3, 2.2, 1.2, 0xc0392b, 0, 1.1, z, { emissive: 0x550000 });
@@ -48,7 +49,7 @@ export class ObstacleScene extends BaseScene {
     const { hud, inventory } = this.game;
     this.applyToPlayer();
     this.reset();
-    hud.show(); hud.help('Space — jump hurdles\nC / Ctrl — duck under bars\nDodge the red blocks\nShift — sprint');
+    hud.show(); hud.help('Space — jump hurdles\nCtrl or C — duck under bars\nDodge the red blocks\nShift — sprint');
     hud.objective('Challenge 2 of 3: Reach the golden gate before the clock hits zero. Getting hit resets you.');
     hud.renderInventory(inventory);
   }
@@ -59,6 +60,9 @@ export class ObstacleScene extends BaseScene {
     hud.timer(this.rules.remaining());
     if (result === 'finished') { hud.timer(null); this.game.nextStage(); return; }
     if (result === 'timeout') { this.fail('Out of time!'); return; }
+    // coach the duck: a bar just ahead and the player is still standing
+    const barAhead = this.bars.some((b) => b.position.z - player.position.z > 0 && b.position.z - player.position.z < 4);
+    hud.prompt(barAhead && !player.crouching ? 'Low bar — hold Ctrl (or C) to duck' : '');
     const pBox = new THREE.Box3(
       new THREE.Vector3(player.position.x - 0.35, player.position.y + 0.1, player.position.z - 0.35),
       new THREE.Vector3(player.position.x + 0.35, player.position.y + player.bodyHeight(), player.position.z + 0.35));

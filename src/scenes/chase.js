@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { BaseScene } from './base.js';
 import { ground, skyAndLights, makeKoala, box } from '../world.js';
 import { ChaseRules } from '../rules.js';
+import { pushOutOfBoxes } from '../collide.js';
 
 const ARENA = 45; // half size
 const KOALA_SCALE = 5;
@@ -24,7 +25,8 @@ export class ChaseScene extends BaseScene {
     this.bounds = { minX: -ARENA + 1, maxX: ARENA - 1, minZ: -ARENA + 1, maxZ: ARENA - 1 };
     this.koala = makeKoala(KOALA_SCALE); s.add(this.koala);
     this.rules = new ChaseRules();
-    this.lastTagFlash = 0;
+    this.dodgeTimer = 0;
+    this.dodgeSide = 1;
   }
   reset() {
     const { player } = this.game;
@@ -51,6 +53,14 @@ export class ChaseScene extends BaseScene {
     const dist = to.length();
     to.normalize();
     this.koala.position.addScaledVector(to, speed * dt);
+    // pillars block the koala; when blocked it sidesteps around them
+    const blocked = pushOutOfBoxes(this.koala.position, this.colliders, KOALA_SCALE * 0.45);
+    if (blocked && this.dodgeTimer <= 0) { this.dodgeTimer = 0.8; this.dodgeSide = Math.sin(this.time * 7) >= 0 ? 1 : -1; }
+    if (this.dodgeTimer > 0) {
+      this.dodgeTimer -= dt;
+      this.koala.position.addScaledVector(new THREE.Vector3(-to.z, 0, to.x), this.dodgeSide * speed * dt);
+      pushOutOfBoxes(this.koala.position, this.colliders, KOALA_SCALE * 0.45);
+    }
     this.koala.position.y = Math.abs(Math.sin(this.time * 6)) * 0.6;
     this.koala.lookAt(player.position.x, this.koala.position.y, player.position.z);
     const { armL, armR } = this.koala.userData.parts;

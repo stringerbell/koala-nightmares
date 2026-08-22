@@ -6,7 +6,7 @@ export class Hud {
   constructor() {
     this.el = {
       hud: $('hud'), objective: $('objective'), timer: $('timer'), prompt: $('prompt'), subtitle: $('subtitle'),
-      inventory: $('inventory'), help: $('controls-help'), bars: $('bars'), hpPlayer: $('hp-player'), hpKoala: $('hp-koala'),
+      stance: $('stance'), inventory: $('inventory'), help: $('controls-help'), bars: $('bars'), hpPlayer: $('hp-player'), hpKoala: $('hp-koala'),
       ammo: $('ammo'), picker: $('slot-picker'), pickerItem: $('picker-item'), pickerSlots: $('picker-slots'),
       message: $('message'), messageTitle: $('message-title'), messageBody: $('message-body'), messageButton: $('message-button'),
       fade: $('fade'), title: $('title'), intro: $('intro'),
@@ -18,6 +18,7 @@ export class Hud {
   timer(seconds) { this.el.timer.textContent = seconds === null ? '' : Math.ceil(seconds).toString(); }
   prompt(t) { this.el.prompt.textContent = t || ''; }
   subtitle(t) { this.el.subtitle.textContent = t || ''; }
+  stance(t) { if (this.el.stance.textContent !== (t || '')) this.el.stance.textContent = t || ''; }
   help(t) { this.el.help.textContent = t || ''; }
   bars(show, player = 1, koala = 1, ammo = null) {
     this.el.bars.classList.toggle('hidden', !show);

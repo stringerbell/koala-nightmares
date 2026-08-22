@@ -137,6 +137,7 @@ class Game {
       }
       if (!paused) {
         this.player.update(dt, this.input);
+        this.hud.stance(this.player.crouching ? 'CROUCHED' : '');
         this.scene.update(dt);
       } else {
         this.hud.prompt('Click to capture the mouse');
