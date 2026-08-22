@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koala Nightmares</title>
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div id="hud" class="hidden">
+  <div id="crosshair"></div>
+  <div id="objective"></div>
+  <div id="timer"></div>
+  <div id="prompt"></div>
+  <div id="subtitle"></div>
+  <div id="bars" class="hidden">
+    <div class="bar"><span>YOU</span><div><i id="hp-player"></i></div></div>
+    <div class="bar"><span>KOALA</span><div><i id="hp-koala"></i></div></div>
+    <div id="ammo"></div>
+  </div>
+  <div id="inventory"></div>
+  <div id="controls-help"></div>
+</div>
+
+<div id="slot-picker" class="overlay hidden">
+  <div class="panel">
+    <h2>Pick a slot for <span id="picker-item"></span></h2>
+    <p>Press 1–9 or click a slot. Choosing a full slot swaps the items.</p>
+    <div id="picker-slots"></div>
+    <p class="dim">Esc to cancel</p>
+  </div>
+</div>
+
+<div id="title" class="overlay">
+  <div class="panel title">
+    <h1>Koala<br>Nightmares</h1>
+    <button id="play">Play</button>
+    <p class="dim">Headphones recommended. Click to lock the mouse once the game starts.</p>
+  </div>
+</div>
+
+<div id="intro" class="overlay hidden">
+  <canvas id="intro-canvas" width="1280" height="800"></canvas>
+</div>
+
+<div id="message" class="overlay hidden">
+  <div class="panel">
+    <h2 id="message-title"></h2>
+    <p id="message-body"></p>
+    <button id="message-button">Continue</button>
+  </div>
+</div>
+
+<div id="fade" class="clear"></div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
