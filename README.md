@@ -25,4 +25,4 @@ make serve        # http://localhost:8080
 - `?stage=jungle|dark|chase|obstacle|fight` — jump straight to a scene with a full pack.
 
 ## Deploy
-Push to `main`: `.github/workflows/deploy.yml` runs the tests and publishes to GitHub Pages (set Pages source to "GitHub Actions" in repo settings). `make deploy` is the manual alternative (force-pushes the tree to a `gh-pages` branch).
+Push to `main`: `.github/workflows/deploy.yml` runs the tests and publishes to GitHub Pages (set Pages source to "GitHub Actions" in repo settings). `make deploy` is the manual alternative: it force-pushes your current commit to the `gh-pages` branch (set Pages source to that branch if you use this route).
